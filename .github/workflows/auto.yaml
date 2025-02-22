@@ -6,11 +6,11 @@ on:
 
 env:
   AWS_REGION: ${{ secrets.AWS_REGION }}
-  ECS_CLUSTER: 
+  ECS_CLUSTER: test-cluster
   ECR_REPOSITORY: test
-  ECS_SERVICE: 
-  CONTAINER_NAME: 
-  TASK_DEFINITION: 
+  ECS_SERVICE: ecs-test-service
+  CONTAINER_NAME: test-container
+  TASK_DEFINITION: test-td
 
 jobs:
   deploy:
@@ -21,30 +21,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Make environment files
-        run: |
-          cat << EOF > .env.stage.prod
-            PORT=${{ secrets.PORT}}
-            NODE_ENV=${{ secrets.NODE_ENV}}
-            MONGO_URI=${{ secrets.MONGO_URI}}
-            JWT_SECRET=${{ secrets.JWT_SECRET}}
-            JWT_EXPIRY_TIME=${{ secrets.JWT_EXPIRY_TIME}}
-            TWO_FACTOR_AUTHENTICATION_APP_NAME=${{ secrets.TWO_FACTOR_AUTHENTICATION_APP_NAME}}
-            AWS_ACCESS_KEY=${{ secrets.AWS_ACCESS_KEY}}
-            AWS_SECRET_KEY=${{ secrets.AWS_SECRET_KEY}}
-            AWS_BUCKET=${{ secrets.AWS_BUCKET}}
-            AWS_REGION=${{ secrets.AWS_REGION}}
-            AWS_ACCESS_URL=${{ secrets.AWS_ACCESS_URL}}
-            SEND_GRID_KEY=${{ secrets.SEND_GRID_KEY}}
-            FROM_EMAIL=${{ secrets.FROM_EMAIL}}
-            ADMIN_EMAIL=${{ secrets.ADMIN_EMAIL}}
-            FIREBASE_PROJECT_ID=${{ secrets.FIREBASE_PROJECT_ID}}
-            FIREBASE_CLIENT_EMAIL=${{ secrets.FIREBASE_CLIENT_EMAIL}}
-            FIREBASE_PRIVATE_KEY=${{ secrets.FIREBASE_PRIVATE_KEY}}
-            PAYPAL_CLIENT_ID=${{ secrets.PAYPAL_CLIENT_ID}}
-            PAYPAL_SECRET=${{ secrets.PAYPAL_SECRET}}
-            RECAPTCHA_SECRET=${{ secrets.RECAPTCHA_SECRET}}
-
+      
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v3
         with:
